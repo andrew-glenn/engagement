@@ -27,46 +27,110 @@
     <div id="container">
       <p class="tagline">I proposed to my girlfriend with electronics and awesome code. Here are all of the details surrounding it.</p>
       <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/sysadchin/engagement/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/sysadchin/engagement/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/sysadchin/engagement" class="code">View Engagement on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
         <article class="markdown-body">
-          <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+          <h2>
+<a name="summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h2>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>As the title implies, I decided to propose through less-than-conventional means. This write-up is to give details around how the idea came to be, the logicial problems surrounding it, the technicial issues (aka, The Learning Curve!), and finally how it came together.</pre>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>
+<a name="the-idea" class="anchor" href="#the-idea"><span class="octicon octicon-link"></span></a>The Idea</h2>
+
+<p>
+    When deciding how to propose, I knew I wanted something a bit out of the ordinary. I wanted something that I would get <i>just right</i>, but something I could pull off. I immediately threw out the typical ideas of "on the beach", "at the top of a skyscraper", and so on. I didn't want it to seem "cookie-cutter", and both of those were difficult to come across during the planning process.<br><br> 
+
+    I was talking with a friend and he encouraged me to incorporate something I enjoy doing. My mind immediately turned to the <a href="http://arduino.cc/">Arduino</a>. I had one floating around, but it was several years old. I immediately bought a newer model and waited for it to arrive.<br><br>
+    So, we have the electronics side done, but what about the presentation? How exactly am I going to get down on one knee and ask? Let's face it, a woman likes the mush-factor. I wanted to be romantic as well, so just randomly turning on a few LEDs was simply out of the question.<br><br> 
+    I decided to incorporate art into my proposal as well. I decided to mount the electronics behind a large canvas that I'd have on display somewhere. Keeping things less-than-obvious was the only way I'd keep it a secret, as she's very intuitive and connects the dots very well. 
+    </p>
+<h2>
+<a name="the-materials" class="anchor" href="#the-materials"><span class="octicon octicon-link"></span></a>The Materials</h2>
+
+<h3>Electronic</h3>
+Because this project was largely electronic based with an artistic garish, most of the materials were on the eletronic side. <br>
+
+<ul><li><a href="http://www.sainsmart.com/arduino-compatibles-1/relay/8-channel-dc-5v-relay-module-for-arduino-pic-arm-dsp-avr-msp430-ttl-logic.html">8-Channel relay board</a></li>
+    <li>A GSM Module from Adafruit. I couldn't find the exact model online. I think it was an unoffical close-out item from RadioShack. In any event, think something like <a href="https://www.sparkfun.com/products/9607">this</a>, but with pin-headers and better documentation.<br><br>This allowed me to interact with the electronics via text message. I had to provide my own SIM card, but that was easy enough with a cheap pre-paid phone from WalMart.</li>
+    <li> A 5Volt (DC), 5 Amp regulated power supply. I could link to the vendor here, but I won't for reasons described later. </li>
+    <li>An old Sony MP3 player I had floating around.</li>
+    <li>300 <a href="https://www.sparkfun.com/products/528">Super Bright LEDs (Red)</a>. I didn't use <i>all</i> of them, and I did get them on a discount (bulk orders), but.. I did use a lot.</li>
+    <li>Various bits of wire</li>
+</ul>
+<h3>Presentational</h3>
+<ul><li>A 24x48 inch canvas from Hobby Lobby.</li>
+    <li>Wood from Lowe's / Home Depot / whatever home improvement store I had on hand</li>
+    <li>Paint for the canvas (Hobby Lobby), and the frame (Lowe's, etc.).</li>
+    <li>Zip ties, screw-in eyelets, other odds and ends that I needed along the way</li>
+</ul>
+
+<h2>
+<a name="logical flow" class="anchor" href="#logcal-flow"><span class="octicon octicon-link"></span></a>Assembly</h2>
+
+<h3>Electronic</h3>
+<p>
+    Here's a logical explaination of how it was <i>supposed</i> to work. 
+    <ul>
+        <li>I would send a text message to the GSM module</li>
+        <li>The Arduino would process that test message. If I was infact the person sending the message, and the message contained a valid command (such as 'start', etc), then the arduino would take action based off of it</li>
+        <li>These actions include turning on the MP3 player, waiting a specified period of time (1 minute, 90 seconds, etc), triggering specific relays with a specifc order, and then waiting another pre-determined period of time before shutting down.</li>
+    </ul>
+    A look at the <a href="images/breadboard.jpg">inital prototyping</a> shows how I constructed the individual letters. Each LED was soldered in individually and wired in series. In some instances, a series of current-limiting resitors were needed to keep the amperage into the letter below thresholds. This was learned the hard-way, sadly, as I burned up a letter while experementing. 
+    <br><br>
+        After I got each letter completed and tested(!), I <a href="images/word_finish.jpg">wired each letter together to form a word.</a> At the end, I only had one set of leads coming from the each word, to minimize connections into the power supply. I had to use slightly larger gauge wire to handle the current though. 
+
+Each board doubled as a support to the canvas after I <a href="images/frame.jpg">built the frame</a>.<br><br>
+<a href="images/wy_led.jpg">Here you can see the words</a> light up during testing. I was trying to get the timing right between "WILL" and "YOU". This was largely by feel, but I settled for a 250ms delay between words, as you'll see if you examine the code. The first two relays are activated here, as you'll see by the small LED indicators on the board. The Arduino and GSM module are currently being powered by an external supply, and the LEDs by the 5V supply on the lower left.<br><br> I was concerned about overloading the 5V supply, so I made sure to seperate everything during testing. I didn't want everything to go up in smoke becuase I had a bad solder joint or something.  I later moved everything to the 5V supply.
+<br><br>
+<h3>Presentational</h3>
+<p> The original goal was to find an ambandoned storefront in Austin somewhere and use the windows. This was later determined to be more effort than what it could be worth, as gaining access to those is not easy, and I was concerned about electricity being available for my project. <br><br> I decided to contact all of the local art galleries and see if they'd be willing to help. I hit google one Saturday afternoon and decided I'd handle things on a first-come, first-serve basis, providing a given gallery was willing to help. 
+<br><br>
+Fast forward to Tuesday morning, and I have a gallery lined up. I gave the staff a call on Lunch and explained what I wanted to do. They were <i>very accomodating</i> and eager to help. I indicated that construction wasn't quite done, but that I'd keep them appraised.
+</p>
+
+<h2><a name="the-big-day" class="anchor" href="#the-big-day"><span class="octicon octicon-link"></span></a>The Big Day!</h2>
+
+<h3> T-Minus 2 weeks </h3>
+<p>During our normal weekly chats, I gave my boss a heads up that I would be out-of-the-office within the next couple of weeks for a few days. I had already put in the HR paperwork, but I wanted to make him aware. This was rubberstamped without indicent, and that's good, because I had no plans to be in the office anyway</p>
+
+<h3>T-Minus 1 day (Thursday)</h3>
+<p>During my preparation, I had been in contact with a mutual friend. They agreed to let me sleep over on Thursday night, although they weren't given the full reason why until I arrived. <br><br>We chatted out on their porch most of the night over wedding related things, and I retired early as I knew I'd have a long day on Friday</p>
+
+<h3><i>The Day</i></h3>
+<p>I woke up around 8am and did my normal morning routine. After wondering downstairs and eating breafast, I placed a call to my soon-to-be-fiancee. She wasn't expecting a phone call from me, as I was supposed to be at work. I didn't let her know that I was off Thursday and Friday. The call went like this:
+<pre><code>
+    *ring*
+    Her: Hi! 
+    Me: Hey! So, I want you to listen to me very carefully okay? 
+    Her: Okay. Wha..What's going on? 
+    Me: You have exactly 90 minutes to get ready to go places. 
+        I will be there to pick you up, we're on a tight schedule,
+        so please don't be late. 
+    Her: Buh..what...what...
+    Me: Make that 89 minutes and 45 seoncds...
+    Her: Okay, Love you! Bye!
 </code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<br>
+From here, I get in the car and head down to the gallery. I gave myself 90 minutes so I could get to the gallery in time and set everything up, then return to her house to pick her up. <br> I got to the gallery in good time and got everything set up and tested (just in case). I left and headed back to her place to pick her up.<br><br>
+We return to the gallery and start looking around. I lead her through each room and feign interest in everything we look at. I really struggled with this because the whole time I'm thinking to myself <i>Okay, just go over here... come along</i>.<br><br>
+The room I had set everything up in is back in a more private area a bit. I had programmed in a 90 second delay into things, so I'd have time to set the stage without reaching into my pocket to send a text, or otherwise do something that'd seem odd. <br> As we walk into the outer portion of the room, I send a text to the Arduino, starting the timer. We make our way around the room and while I tried not to rush her, I knew we were on a timer. We got over to the corner a little ahead of schedule, so I had to draw her attention to a watch that had been disassembled. About when I'm thinking <i> well, crap, is this going to work?!</i>, I hear the second relay trigger. This turns the music on (more on this in a minute), and I knew it was showtime!
+<br><br>
+I took her hands in mine, and said a few mushy things about us. I dragged it out slightly so I could be down on one knee once the vocals started and the words lit up. I ended the mushy seciton with "I have a question for you." She responded with "What's that?!". I waved my hand slightly to my right (her left) and she looks over, just as everything turns on. She reads <I>WILL YOU MARRY ME</I> and notices I'm on one knee, asking the same.<br><br>
+After getting over the shock, she said yes (of course), and we proceeded to chat with the staff a little bit and proceed along with our day. 
+<h2><a name="almost-wasnt" class="anchor" href="#almost-wasnt"><span class="octicon octicon-link"></span></a>The Proposal that almost...wasn't.</h2>
+<p>
+I ran into a lot of oh-crap moments while bringing this all together. Here are a few big ones. 
+<ul>
+    <li> Realizing I needed to develop this in a variant of C. I don't have a lot of experience with it, so I knew it'd be a challenge. </li>
+    <li> Having a letter burn up on me, destroying 2 evenings worth of work</li>
+    <li> Getting the arduino to talk to the GSM Module. I wasn't able to get the first module talking with the Arduino. My research indicated that it was potentially a mix between the capibilities of the arduino model I had, and the GSM module itself. I eventually scrapped that and got a secondary one as I was running low on time</li>
+    <li> Shipping delays with the 5V Power Supply. The vendor I used for this had a technicial error when sending out the supply. It was received here, then sent back as undeliverable. I had several discussions with them, and ultimately had to threaten a chargeback to get the power supply to me on-time.</li> 
+    <li> The GSM Module refused to give me the full text of the SMS messages I was sending it. I wanted to incorporate commands into it, so I could make sure it was responding before I got to the gallery. The last thing I wanted was to have things not work due to lack of cell signal. This resulted in going at it for 8 hours until I finally gave up and used my phone number as a simple access-control method. This was needed to ensure drive-by spammers didn't turn things on prematurely</li>
+    <li> Wiring the power supply: The PSU didn't come with a 110V plug, so I had to cut and strip the wires off of one and connect it myself. It was a bit nerve racking working with 110V (stuff that can kill), hoping I got the connectionsn right. Thankfully, google and my trusty multimeter helped with this</li>
+    <li> The ring. I had sent it out to be resized, and it wasn't due to come back until the night-before my proposal. Any delays would've been very bad. Thankfully, the vendor was good to their word and I got it back just in time.</li>
+</ul>
+<h2><a name="source-code" class="anchor" href="#source-code"><span class="octicon octicon-link"></span></a>Source</h2>
+<p>The source is avaiailable in the <a href="https://github.com/sysadchin/engagement/blob/master/sketch.ino">github repo</a>. 
+</p>
         </article>
       </div>
     </div>
@@ -83,7 +147,7 @@ $ git checkout gh-pages
   </div>
   <div class="current-section">
     <a href="#top">Scroll to top</a>
-    <a href="https://github.com/sysadchin/engagement/tarball/master" class="tar">tar</a><a href="https://github.com/sysadchin/engagement/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <a href="https://github.com/sysadchin/engagement/tarball/master" class="tar">tar</a><a href="https://github.com/sysadchin/engagement/blob/master/sketch.ino">blob</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
 
